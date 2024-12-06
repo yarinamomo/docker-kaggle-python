@@ -122,19 +122,20 @@ RUN apt-get install -y git-lfs && \
     apt-get install -y xvfb && \
     /tmp/clean-layer.sh
 
-# Download base easyocr models.
-# https://github.com/JaidedAI/EasyOCR#usage
-RUN mkdir -p /root/.EasyOCR/model && \
-    wget --no-verbose "https://github.com/JaidedAI/EasyOCR/releases/download/v1.3/latin_g2.zip" -O /root/.EasyOCR/model/latin.zip && \
-    unzip /root/.EasyOCR/model/latin.zip -d /root/.EasyOCR/model/ && \
-    rm /root/.EasyOCR/model/latin.zip && \
-    wget --no-verbose "https://github.com/JaidedAI/EasyOCR/releases/download/v1.3/english_g2.zip" -O /root/.EasyOCR/model/english.zip && \
-    unzip /root/.EasyOCR/model/english.zip -d /root/.EasyOCR/model/ && \
-    rm /root/.EasyOCR/model/english.zip && \
-    wget --no-verbose "https://github.com/JaidedAI/EasyOCR/releases/download/pre-v1.1.6/craft_mlt_25k.zip" -O /root/.EasyOCR/model/craft_mlt_25k.zip && \
-    unzip /root/.EasyOCR/model/craft_mlt_25k.zip -d /root/.EasyOCR/model/ && \
-    rm /root/.EasyOCR/model/craft_mlt_25k.zip && \
-    /tmp/clean-layer.sh
+# note--->it crashes when building
+# # Download base easyocr models.
+# # https://github.com/JaidedAI/EasyOCR#usage
+# RUN mkdir -p /root/.EasyOCR/model && \
+#     wget --no-verbose "https://github.com/JaidedAI/EasyOCR/releases/download/v1.3/latin_g2.zip" -O /root/.EasyOCR/model/latin.zip && \
+#     unzip /root/.EasyOCR/model/latin.zip -d /root/.EasyOCR/model/ && \
+#     rm /root/.EasyOCR/model/latin.zip && \
+#     wget --no-verbose "https://github.com/JaidedAI/EasyOCR/releases/download/v1.3/english_g2.zip" -O /root/.EasyOCR/model/english.zip && \
+#     unzip /root/.EasyOCR/model/english.zip -d /root/.EasyOCR/model/ && \
+#     rm /root/.EasyOCR/model/english.zip && \
+#     wget --no-verbose "https://github.com/JaidedAI/EasyOCR/releases/download/pre-v1.1.6/craft_mlt_25k.zip" -O /root/.EasyOCR/model/craft_mlt_25k.zip && \
+#     unzip /root/.EasyOCR/model/craft_mlt_25k.zip -d /root/.EasyOCR/model/ && \
+#     rm /root/.EasyOCR/model/craft_mlt_25k.zip && \
+#     /tmp/clean-layer.sh
 
 # Tesseract and some associated utility packages
 RUN apt-get install tesseract-ocr -y
@@ -153,14 +154,15 @@ RUN mkdir -p /root/.jupyter && touch /root/.jupyter/jupyter_nbconvert_config.py 
     mkdir -p /etc/ipython/ && echo "c = get_config(); c.IPKernelApp.matplotlib = 'inline'" > /etc/ipython/ipython_config.py && \
     /tmp/clean-layer.sh
 
-# Fix to import bq_helper library without downgrading setuptools
-RUN mkdir -p ~/src && git clone https://github.com/SohierDane/BigQuery_Helper ~/src/BigQuery_Helper && \
-    mkdir -p ~/src/BigQuery_Helper/bq_helper && \
-    mv ~/src/BigQuery_Helper/bq_helper.py ~/src/BigQuery_Helper/bq_helper/__init__.py && \
-    mv ~/src/BigQuery_Helper/test_helper.py ~/src/BigQuery_Helper/bq_helper/ && \
-    sed -i 's/)/packages=["bq_helper"])/g' ~/src/BigQuery_Helper/setup.py && \
-    uv pip install --system -e ~/src/BigQuery_Helper && \
-    /tmp/clean-layer.sh
+# note--->it crashes when building
+# # Fix to import bq_helper library without downgrading setuptools
+# RUN mkdir -p ~/src && git clone https://github.com/SohierDane/BigQuery_Helper ~/src/BigQuery_Helper && \
+#     mkdir -p ~/src/BigQuery_Helper/bq_helper && \
+#     mv ~/src/BigQuery_Helper/bq_helper.py ~/src/BigQuery_Helper/bq_helper/__init__.py && \
+#     mv ~/src/BigQuery_Helper/test_helper.py ~/src/BigQuery_Helper/bq_helper/ && \
+#     sed -i 's/)/packages=["bq_helper"])/g' ~/src/BigQuery_Helper/setup.py && \
+#     uv pip install --system -e ~/src/BigQuery_Helper && \
+#     /tmp/clean-layer.sh
 
 
 # install imagemagick for wand
