@@ -1,4 +1,47 @@
-# docker-python
+# docker-python (Forked)
+
+This is a fork of the official [Kaggle Docker Python repository](https://github.com/Kaggle/docker-python), modified to include a reproducible research environment used in my research.
+
+---
+
+## ✅ Reproducing My Research Environment
+
+To recreate the Python environment used in my research:
+
+### Step 1: Clone This Repository
+
+```sh
+git clone https://github.com/yarinamomo/docker-kaggle-python.git
+cd docker-kaggle-python
+```
+
+### Step 2: Build the Docker Image
+
+```sh
+docker build -t my-kaggle-env .
+```
+
+This uses the official Kaggle Python base image and installs all required libraries used in the **benchmark dataset** in the reasearch listed in **requirements.txt**.
+
+If you previously built the image and want to rebuild with a new requirements file, use --no-cache
+
+```sh
+docker build --no-cache -t my-kaggle-env .
+```
+
+### Step 3: Run the Container
+
+```sh
+docker run -it my-kaggle-env
+```
+
+To mount your current working directory for notebook development:
+
+```sh
+docker run -it -v $(pwd):/workspace my-kaggle-env
+```
+
+## 📦 Original Kaggle Image Information
 
 [Kaggle Notebooks](https://www.kaggle.com/notebooks) allow users to run a Python Notebook in the cloud against our competitions and datasets without having to download data or set up their environment.
 
